@@ -7,7 +7,7 @@ my
 
 ・library
 
-[Atcoder](https://beta.atcoder.jp/users/Hoi_koro)
+[AtCoder](https://beta.atcoder.jp/users/Hoi_koro)
 
 [Codeforces](http://codeforces.com/profile/Hoi_koro)
 
