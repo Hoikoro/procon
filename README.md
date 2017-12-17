@@ -1,5 +1,5 @@
 # procon
-my
+competitive programming
 
 ・submissions
 
