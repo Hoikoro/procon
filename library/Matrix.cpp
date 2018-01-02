@@ -43,6 +43,42 @@ int sweepout(Matrix &t){
     return rank;
 }
 
+//double 行列のrankを掃き出し法で求める。epsの大きさ注意
+//A:n*n行列として、(A I_n)を入れると、返り値rank=nの時、引数は(I_n, A^{-1})になっている．
+    int sweepout(Matrix &t){
+        double eps=1e-8;
+        int dig=t.size(),n=t[0].size(),rank=0;
+        for(int i=0;i<n;++i){
+            int p=rank;
+            while(abs(t[p][i])<eps){
+                p++;
+                if(p==dig) break;
+            }
+            if(p==dig) return -1;
+            t[rank].swap(t[p]);
+            for(int k=i+1; k<n; ++k){
+                t[rank][k]/=t[rank][i];
+            }
+            t[rank][i]=1;
+            for(int j=rank+1;j<dig;++j){
+                for(int k=i+1;k<n;++k){
+                    t[j][k]-=t[rank][k]*t[j][i]/t[rank][i];
+                }
+                t[j][i]=0;
+            }
+            rank++;
+            if(rank==min(n,dig))break;
+        }
+        for(int j=dig-1; j>=0; --j){
+            for(int i=0; i<j; ++i){
+                for(int k=j+1; k<n; ++k){
+                    t[i][k]-=t[j][k]*t[i][j];
+                }
+            }
+        }
+        return rank;
+    }
+
 int main(){
     cin.tie(0);
     ios::sync_with_stdio(false);

@@ -35,6 +35,24 @@ struct Max_Add{
     V::T operator()(const V::T &a, const A::T &b, const int &h){return a+b;};
 };
 
+struct RangeSum{
+    using T = long long;
+    T operator()(const T &a, const T &b){return a+b;}
+    static constexpr T id(){return T(0);};
+};
+
+struct RangeAdd{
+    using T = long long;
+    T operator()(const T &a, const T &b){return a+b;};
+    static constexpr T id(){return T(0);};
+};
+
+struct Sum_Add{
+    using V = RangeSum;
+    using A = RangeAdd;
+    V::T operator()(const V::T &a, const A::T &b, const int &h){return a+(b<<h);};
+};
+
 template<typename M>
 struct LazySegmentTree{
     using Val = typename M::V::T;
