@@ -12,9 +12,10 @@ struct Edge{
 using Graph = vector<vector<Edge>>;
 
 struct StronglyConnectedComponents{
+    int cnt;
     vector<int> scrank, visited, postorder;
     Graph graph, rgraph;
-    vector<vector<int>> scc_dag; //scc_dag : contracted graph
+    vector<vector<int>> scc_dag,inv; //scc_dag : contracted graph
     StronglyConnectedComponents(int n) : scrank(n, -1), visited(n), graph(n), rgraph(n) {}
     StronglyConnectedComponents(Graph &g, Graph &rg) : scrank((int)g.size(), -1), visited((int)g.size()){
         graph = g;
@@ -47,7 +48,12 @@ struct StronglyConnectedComponents{
         for (int i = rgraph.size() - 1; i >= 0; --i){
             if (!visited[postorder[i]]) rdfs(postorder[i], rank++, rgraph);
         }
+        cnt = rank;
         scc_dag.resize(rank);
+        inv.resize(rank);
+        for(int i=0; i<(int)graph.size(); ++i){
+            inv[scrank[i]].push_back(i);
+        }
     }
     void calc_with_DAG(){
         calc();
