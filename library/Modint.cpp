@@ -127,6 +127,8 @@ template <long long M>
 ostream &operator<<(ostream &os, const Modint<M> m) {
   return os << m.v;
 }
+
+
 // stable
 template <long long Mod = MOD>
 struct Modint {

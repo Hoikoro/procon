@@ -6,22 +6,35 @@ using LL = long long;
 constexpr LL LINF=334ll<<53;
 constexpr int INF=15<<26;
 constexpr LL  MOD=1E9+7;
-
-struct Factorial{
-    int n;
-    vector<long long> fac,inv;
-    Factorial(long long n):n(n),fac(n+1),inv(n+1){
-        fac[0]=1;
-        for(int i=0; i<n; ++i)fac[i+1]=fac[i]*(i+1)%MOD;
-        inv[n]=modpow(fac[n],MOD-2);
-        for(int i=n-1; i>=0; --i)inv[i]=inv[i+1]*(i+1)%MOD;
-    };
-    long long modpow(long long a, long long n,long long mod=MOD){
-        long long i=1,ret=1,p=a;
-        while(i<=n){if(i&n){ret=(ret*p)%mod;}i=(i<<1);p=(p*p)%mod;}
-        return ret;
+template <long long Mod = MOD>
+class Factorial {
+ public:
+  int n;
+  Factorial(long long n) : n(n), fac(n + 1), inv(n + 1) {
+    fac[0] = 1;
+    for (int i = 0; i < n; ++i) fac[i + 1] = fac[i] * (i + 1) % Mod;
+    inv[n] = modpow(fac[n], Mod - 2);
+    for (int i = n - 1; i >= 0; --i) inv[i] = inv[i + 1] * (i + 1) % Mod;
+  };
+  long long modpow(long long a, long long n, long long mod = Mod) {
+    long long i = 1, ret = 1, p = a;
+    while (i <= n) {
+      if (i & n) {
+        ret = (ret * p) % mod;
+      }
+      i = (i << 1);
+      p = (p * p) % mod;
     }
-    long long comb(int a, int b){return (fac[a]*inv[b]%MOD)*inv[a-b]%MOD;}
+    return ret;
+  }
+  long long comb(int a, int b) {
+    return (fac[a] * inv[b] % Mod) * inv[a - b] % Mod;
+  }
+  long long get(int x) { return fac[x]; }
+  long long getInv(int x) { return inv[x]; }
+
+ private:
+  vector<long long> fac, inv;
 };
 
 struct Factorial{
